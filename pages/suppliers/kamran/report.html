@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Report - Kamran Supplier</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #f5faff;
+      color: #003366;
+      overflow-x: hidden;
+    }
+
+    /* ---------- HEADER ---------- */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 97%;
+      background: rgba(0, 119, 204, 0.95);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 30px;
+      z-index: 100;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    header h1 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: white;
+      margin: 0;
+    }
+
+    .supplier-name {
+      font-size: 1.2rem;
+      color: white;
+      font-weight: 600;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    nav {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: white;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 6px 10px;
+      border-radius: 6px;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #b3e0ff;
+    }
+
+    /* ---------- MAIN ---------- */
+    main {
+      margin-top: 110px;
+      padding: 20px;
+    }
+
+    main h2 {
+      text-align: center;
+      color: #005fa3;
+      margin-bottom: 25px;
+    }
+
+    .chart-container {
+      width: 100%;
+      max-width: 800px;
+      margin: auto;
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .totals {
+      max-width: 800px;
+      margin: 30px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .totals p {
+      font-size: 1.1rem;
+      margin: 10px 0;
+      color: #003366;
+    }
+
+    footer {
+      background-color: #0077cc;
+      color: white;
+      text-align: center;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 60px;
+    }
+
+    @media (max-width: 768px) {
+      .chart-container, .totals {
+        width: 95%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Arctic Mineral Water Co</h1>
+    <span class="supplier-name">Kamran Supplier</span>
+    <nav>
+      <a href="kamran.html">Home</a>
+      <a href="admin.html">Admin</a>
+      <a href="#contact">Contact Us</a>
+    </nav>
+  </header>
+
+  <main>
+    <h2>Supply Report</h2>
+    <div class="chart-container">
+      <canvas id="supplyChart"></canvas>
+    </div>
+
+    <div class="totals">
+      <p><strong>Total Canes Supply:</strong> <span id="totalSupply">0</span></p>
+      <p><strong>Total Canes Received:</strong> <span id="totalReceived">0</span></p>
+      <p><strong>Canes Balance:</strong> <span id="canesBalance">0</span></p>
+      <p><strong>Total Amount:</strong> <span id="totalAmount">0</span></p>
+    </div>
+  </main>
+
+  <footer id="contact">
+    <p>© 2025 Arctic Mineral Water Co | All Rights Reserved</p>
+  </footer>
+
+  <script>
+    const ctx = document.getElementById('supplyChart').getContext('2d');
+    const supplyChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Customer A', 'Customer B', 'Customer C', 'Customer D'],
+        datasets: [
+          {
+            label: 'Canes Delivered',
+            data: [50, 30, 40, 20],
+            backgroundColor: 'rgba(0, 119, 204, 0.7)'
+          },
+          {
+            label: 'Canes Received',
+            data: [45, 25, 35, 15],
+            backgroundColor: 'rgba(0, 180, 255, 0.7)'
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { position: 'top' },
+          title: {
+            display: true,
+            text: 'Customer vs Canes Delivered / Received'
+          }
+        }
+      }
+    });
+
+    // Example totals
+    document.getElementById('totalSupply').textContent = 140;
+    document.getElementById('totalReceived').textContent = 120;
+    document.getElementById('canesBalance').textContent = 20;
+    document.getElementById('totalAmount').textContent = '$560';
+  </script>
+</body>
+</html>

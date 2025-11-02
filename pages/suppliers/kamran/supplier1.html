@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Supplier 1 - CrystalPure Water</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #f5faff;
+      color: #003366;
+      overflow-x: hidden;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(0, 119, 204, 0.9);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 40px;
+      z-index: 10;
+      color: white;
+    }
+
+    header h1 {
+      font-size: 1.6rem;
+      font-weight: bold;
+    }
+
+    nav {
+      display: flex;
+      gap: 25px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: white;
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #b3e0ff;
+    }
+
+    .banner {
+      margin-top: 80px;
+      width: 100%;
+      height: 200px;
+      background: url('images/banner-placeholder.jpg') center/cover no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 2rem;
+      font-weight: 700;
+      background-color: #0077cc;
+    }
+
+    .boxes {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 20px;
+      padding: 40px 20px;
+    }
+
+    .box {
+      background: white;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
+      width: 300px;
+      height: 220px;
+      text-align: center;
+      overflow: hidden;
+      transition: transform 0.3s;
+    }
+
+    .box:hover {
+      transform: translateY(-5px);
+    }
+
+    .box img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+    }
+
+    .box p {
+      padding: 10px;
+      font-size: 1rem;
+      font-weight: 500;
+    }
+
+    .buttons {
+      text-align: center;
+      padding-bottom: 60px;
+    }
+
+    .buttons a {
+      display: inline-block;
+      text-decoration: none;
+      background-color: #0077cc;
+      color: white;
+      padding: 12px 28px;
+      border-radius: 8px;
+      font-weight: 600;
+      margin: 10px;
+      transition: background-color 0.3s, box-shadow 0.3s;
+    }
+
+    .buttons a:hover {
+      background-color: #005fa3;
+      box-shadow: 0 4px 10px rgba(0, 95, 163, 0.3);
+    }
+
+    footer {
+      background-color: #0077cc;
+      color: white;
+      text-align: center;
+      padding: 15px;
+    }
+
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .boxes {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .box {
+        width: 90%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Supplier 1</h1>
+    <nav>
+      <a href="admin.html">Admin</a>
+      <a href="#contact">Contact Us</a>
+    </nav>
+  </header>
+
+  <section class="banner">
+    <p>Banner Placeholder</p>
+  </section>
+
+  <section class="boxes">
+    <div class="box">
+      <img src="images/box1-placeholder.jpg" alt="Box 1">
+      <p>Box 1 - Managed by Super Admin</p>
+    </div>
+    <div class="box">
+      <img src="images/box2-placeholder.jpg" alt="Box 2">
+      <p>Box 2 - Managed by Super Admin</p>
+    </div>
+    <div class="box">
+      <img src="images/box3-placeholder.jpg" alt="Box 3">
+      <p>Box 3 - Managed by Super Admin</p>
+    </div>
+  </section>
+
+  <section class="buttons">
+    <a href="supply.html">Supply</a>
+    <a href="expense.html">Expense</a>
+    <a href="report.html">Report</a>
+  </section>
+
+  <footer id="contact">
+    <p>© 2025 CrystalPure Water Supply | All Rights Reserved</p>
+  </footer>
+</body>
+</html>
