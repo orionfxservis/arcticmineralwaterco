@@ -1,11 +1,9 @@
 {
-  "suppliers": [
+  "supplier": "kamran",
+  "banners": [
     {
-      "name": "kamran",
-      "banner": {
-        "fileName": "orionfx-web-banner.gif",
-        "url": "https://orionfxservis.github.io/arcticmineralwaterco/images/banner/orionfx-web-banner.gif"
-      }
+      "fileName": "orionfx-web-banner.gif",
+      "url": "https://orionfxservis.github.io/arcticmineralwaterco/images/banner/orionfx-web-banner.gif"
     }
   ]
 }
