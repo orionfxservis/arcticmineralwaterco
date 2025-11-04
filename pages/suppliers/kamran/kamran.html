@@ -186,21 +186,38 @@
 </html>
 
 <script>
+const bannerSection = document.getElementById('bannerSection');
+
 fetch('https://orionfxservis.github.io/arcticmineralwaterco/data/banners.json')
-  .then(response => response.json())
+  .then(response => {
+    if (!response.ok) throw new Error('Network response was not ok');
+    return response.json();
+  })
   .then(data => {
-    // Find Kamran's banner
-    const supplierBanner = data.suppliers.find(s => s.name.toLowerCase() === 'kamran');
-    
-    if (supplierBanner && supplierBanner.banner && supplierBanner.banner.url) {
-      const bannerSection = document.getElementById('bannerSection');
-      bannerSection.style.background = `url('${supplierBanner.banner.url}') center/cover no-repeat`;
-      bannerSection.innerHTML = ''; // Remove loading text
+    // Support both formats:
+    // { "supplier":"kamran","banners":[{"url":"..."}] }
+    // OR { "banners":[{"url":"..."}] }
+    let bannerURL = '';
+
+    if (data.supplier === 'kamran' && data.banners?.length > 0) {
+      bannerURL = data.banners[0].url;
+    } else if (data.banners?.length > 0) {
+      bannerURL = data.banners[0].url;
+    }
+
+    if (bannerURL) {
+      bannerSection.style.background = `url('${bannerURL}') center/cover no-repeat`;
+      bannerSection.innerHTML = '';
+      console.log('✅ Banner loaded successfully:', bannerURL);
     } else {
-      console.warn('⚠️ No banner found for Kamran in JSON file.');
+      bannerSection.innerHTML = '<p>⚠️ No banner found in JSON.</p>';
+      console.warn('⚠️ No banner URL found in JSON.');
     }
   })
   .catch(err => {
+    bannerSection.innerHTML = '<p>❌ Failed to load banner.</p>';
     console.error('❌ Error loading banner:', err);
   });
 </script>
+
+
