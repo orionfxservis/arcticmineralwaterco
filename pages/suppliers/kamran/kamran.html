@@ -8,9 +8,23 @@
     body {
       margin: 0;
       font-family: 'Poppins', sans-serif;
-      background-color: #f5faff;
+      background: url('https://images.unsplash.com/photo-1502741338009-cac2772e18bc?auto=format&fit=crop&w=3840&q=80') 
+                  center center / cover no-repeat fixed;
       color: #003366;
       overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* Overlay to make text readable */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.85);
+      z-index: -1;
     }
 
     header {
@@ -64,70 +78,25 @@
     }
 
     .banner {
-  margin: 100px auto 0;
-  width: 1100px;
-  height: 150px;
-  background: url('../../../images/banner-placeholder.jpg') center center / contain no-repeat;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 2rem;
-  font-weight: 700;
-  background-color: #0077cc;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-    .boxes {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 20px;
-  padding: 40px 20px;
-}
-
-.box {
-  background: white;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  border-radius: 12px;
-  width: 300px;
-  text-align: center;
-  transition: transform 0.3s ease;
-  overflow: hidden;
-  padding: 15px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.box:hover {
-  transform: translateY(-5px);
-}
-
-.box img {
-  width: auto;
-  max-width: 100%;
-  height: auto;
-  max-height: 180px;
-  margin-bottom: 10px;
-  object-fit: contain;
-  border-radius: 8px;
-  background-color: #f8faff;
-}
-
-.box p {
-  font-size: 1rem;
-  font-weight: 500;
-  margin: 0;
-  color: #003366;
-}
-
+      margin: 100px auto 40px;
+      width: 1100px;
+      height: 150px;
+      background: url('../../../images/banner-placeholder.jpg') center center / contain no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 2rem;
+      font-weight: 700;
+      background-color: #0077cc;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
 
     .buttons {
       text-align: center;
-      padding-bottom: 60px;
+      padding: 100px 20px 140px;
     }
 
     .buttons a {
@@ -135,10 +104,10 @@
       text-decoration: none;
       background-color: #0077cc;
       color: white;
-      padding: 12px 28px;
+      padding: 14px 32px;
       border-radius: 8px;
       font-weight: 600;
-      margin: 10px;
+      margin: 15px;
       transition: background-color 0.3s, box-shadow 0.3s;
     }
 
@@ -151,7 +120,19 @@
       background-color: #0077cc;
       color: white;
       text-align: center;
-      padding: 15px;
+      padding: 20px;
+      margin-top: 40px;
+    }
+
+    @media (max-width: 768px) {
+      .banner {
+        width: 95%;
+        height: auto;
+      }
+      header {
+        flex-direction: column;
+        text-align: center;
+      }
     }
   </style>
 </head>
@@ -160,30 +141,13 @@
     <h1>Arctic Mineral Water Co</h1>
     <span class="supplier-name">Kamran Supplier</span>
     <nav>
-     
       <a href="admin.html">Admin</a>
       <a href="#contact">Contact Us</a>
     </nav>
   </header>
 
   <section class="banner" id="bannerSection">
-  <p>Loading Banner...</p>
-</section>
-
-
-  <section class="boxes">
-    <div class="box">
-      <img src="../../../images/canes/12-ltr-02.jpg" alt="Box 1">
-      <p>Price. 20/-, Free Home Delivery</p>
-    </div>
-    <div class="box">
-      <img src="../../../images/canes/19 ltr.jpg" alt="Box 2">
-      <p>Price. 80/-, Free Home Delivery</p>
-    </div>
-    <div class="box">
-      <img src="../../../images/canes/1000-ltr.jpg" alt="Box 3">
-      <p>Box 3 - Managed by Super Admin</p>
-    </div>
+    <p>Loading Banner...</p>
   </section>
 
   <section class="buttons">
@@ -195,42 +159,36 @@
   <footer id="contact">
     <p>© 2025 Arctic Mineral Water Co | All Rights Reserved</p>
   </footer>
+
+  <script>
+    const bannerSection = document.getElementById('bannerSection');
+
+    fetch('https://orionfxservis.github.io/arcticmineralwaterco/data/banners.json')
+      .then(response => {
+        if (!response.ok) throw new Error('Network response was not ok');
+        return response.json();
+      })
+      .then(data => {
+        let bannerURL = '';
+
+        if (data.supplier === 'kamran' && data.banners?.length > 0) {
+          bannerURL = data.banners[0].url;
+        } else if (data.banners?.length > 0) {
+          bannerURL = data.banners[0].url;
+        }
+
+        if (bannerURL) {
+          bannerSection.style.background = `url('${bannerURL}') center/cover no-repeat`;
+          bannerSection.innerHTML = '';
+          console.log('✅ Banner loaded successfully:', bannerURL);
+        } else {
+          bannerSection.innerHTML = '<p>⚠️ No banner found in JSON.</p>';
+        }
+      })
+      .catch(err => {
+        bannerSection.innerHTML = '<p>❌ Failed to load banner.</p>';
+        console.error('❌ Error loading banner:', err);
+      });
+  </script>
 </body>
 </html>
-
-<script>
-const bannerSection = document.getElementById('bannerSection');
-
-fetch('https://orionfxservis.github.io/arcticmineralwaterco/data/banners.json')
-  .then(response => {
-    if (!response.ok) throw new Error('Network response was not ok');
-    return response.json();
-  })
-  .then(data => {
-    // Support both formats:
-    // { "supplier":"kamran","banners":[{"url":"..."}] }
-    // OR { "banners":[{"url":"..."}] }
-    let bannerURL = '';
-
-    if (data.supplier === 'kamran' && data.banners?.length > 0) {
-      bannerURL = data.banners[0].url;
-    } else if (data.banners?.length > 0) {
-      bannerURL = data.banners[0].url;
-    }
-
-    if (bannerURL) {
-      bannerSection.style.background = `url('${bannerURL}') center/cover no-repeat`;
-      bannerSection.innerHTML = '';
-      console.log('✅ Banner loaded successfully:', bannerURL);
-    } else {
-      bannerSection.innerHTML = '<p>⚠️ No banner found in JSON.</p>';
-      console.warn('⚠️ No banner URL found in JSON.');
-    }
-  })
-  .catch(err => {
-    bannerSection.innerHTML = '<p>❌ Failed to load banner.</p>';
-    console.error('❌ Error loading banner:', err);
-  });
-</script>
-
-
