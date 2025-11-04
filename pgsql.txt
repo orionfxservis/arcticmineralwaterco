@@ -1,0 +1,18 @@
+project-folder/
+├── index.html
+├── images/
+│   ├── banner/
+│   │   ├── banner1.jpg
+│   │   ├── banner2.jpg
+│   │   ├── banner3.jpg
+│   │   └── banners.json
+│   ├── bg/
+│   └── logo/
+└── pages/
+    └── suppliers/
+        └── kamran/
+            ├── kamran.html
+            ├── supply.html
+            ├── expense.html
+            ├── report.html
+            └── admin.html
