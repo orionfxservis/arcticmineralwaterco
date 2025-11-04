@@ -81,39 +81,49 @@
 }
 
     .boxes {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 20px;
-      padding: 40px 20px;
-    }
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 40px 20px;
+}
 
-    .box {
-      background: white;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      border-radius: 12px;
-      width: 300px;
-      height: 220px;
-      text-align: center;
-      transition: transform 0.3s;
-      overflow: hidden;
-    }
+.box {
+  background: white;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  width: 300px;
+  text-align: center;
+  transition: transform 0.3s ease;
+  overflow: hidden;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-    .box:hover {
-      transform: translateY(-5px);
-    }
+.box:hover {
+  transform: translateY(-5px);
+}
 
-    .box img {
-      width: 100%;
-      height: 150px;
-      object-fit: cover;
-    }
+.box img {
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  max-height: 180px;
+  margin-bottom: 10px;
+  object-fit: contain;
+  border-radius: 8px;
+  background-color: #f8faff;
+}
 
-    .box p {
-      padding: 10px;
-      font-size: 1rem;
-      font-weight: 500;
-    }
+.box p {
+  font-size: 1rem;
+  font-weight: 500;
+  margin: 0;
+  color: #003366;
+}
+
 
     .buttons {
       text-align: center;
@@ -171,7 +181,7 @@
       <p>Price. 80/-, Free Home Delivery</p>
     </div>
     <div class="box">
-      <img src="../../../images/box3-placeholder.jpg" alt="Box 3">
+      <img src="../../../images/canes/1000-ltr.jpg" alt="Box 3">
       <p>Box 3 - Managed by Super Admin</p>
     </div>
   </section>
