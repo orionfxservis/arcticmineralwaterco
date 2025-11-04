@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Super Admin - Arctic Mineral Water Co</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #f5faff;
+      color: #003366;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(0,119,204,0.9);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      color: white;
+      z-index: 10;
+    }
+
+    header h1 {
+      font-size: 1.3rem;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 15px;
+      font-weight: 600;
+    }
+
+    nav a:hover {
+      color: #b3e0ff;
+    }
+
+    main {
+      margin-top: 80px;
+      padding: 30px;
+      max-width: 1000px;
+      margin-inline: auto;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      color: #0077cc;
+      text-align: center;
+    }
+
+    form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    form input, form select {
+      padding: 10px;
+      border: 1px solid #0077cc;
+      border-radius: 6px;
+      width: 250px;
+    }
+
+    form button {
+      background-color: #0077cc;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    form button:hover {
+      background-color: #005fa3;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 30px;
+    }
+
+    th, td {
+      border: 1px solid #0077cc;
+      padding: 10px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #0077cc;
+      color: white;
+    }
+
+    #bannerPreview {
+      display: block;
+      margin: 20px auto;
+      max-width: 90%;
+      max-height: 250px;
+      border-radius: 8px;
+      border: 2px solid #0077cc;
+      object-fit: cover;
+      display: none;
+    }
+
+    footer {
+      background-color: #0077cc;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      margin-top: 50px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Super Admin Panel</h1>
+    <nav>
+      <a href="../index.html">Home</a>
+      <a href="#suppliers">Suppliers</a>
+      <a href="#banner">Banner JSON</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="suppliers">
+      <h2>Manage Suppliers</h2>
+      <form>
+        <input type="text" placeholder="Supplier Name" required>
+        <input type="text" placeholder="Contact No" required>
+        <input type="email" placeholder="Email">
+        <input type="text" placeholder="Folder Path (e.g. kamran)">
+        <button type="submit">Add / Update Supplier</button>
+      </form>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Supplier Name</th>
+            <th>Contact No</th>
+            <th>Email</th>
+            <th>Folder Path</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Kamran</td>
+            <td>0300-1234567</td>
+            <td>kamran@waterco.com</td>
+            <td>pages/suppliers/kamran</td>
+            <td><button>Edit</button> <button>Delete</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="banner" style="margin-top: 60px;">
+  <h2>Banner Configuration</h2>
+  <form id="bannerForm">
+    <label>Select Supplier:</label>
+    <select id="supplierName" required>
+      <option value="">-- Choose Supplier --</option>
+      <option value="kamran">Kamran</option>
+      <!-- Add more suppliers later -->
+    </select>
+
+    <label>Paste GitHub Banner Link:</label>
+    <input type="url" id="bannerUrl" placeholder="https://.../images/banner/banner-name.gif" required style="width:90%; max-width:600px;">
+
+    <img id="bannerPreview" alt="Banner Preview">
+
+    <button id="generateJsonBtn" type="submit">Generate JSON</button>
+  </form>
+</section>
+
+  <footer>
+    <p>© 2025 Arctic Mineral Water Co | Super Admin Panel</p>
+  </footer>
+
+  <script>
+const bannerUrlInput = document.getElementById('bannerUrl');
+const preview = document.getElementById('bannerPreview');
+const form = document.getElementById('bannerForm');
+const supplierSelect = document.getElementById('supplierName');
+
+// Live preview
+bannerUrlInput.addEventListener('input', function () {
+  const url = this.value.trim();
+  if (url.startsWith('http')) {
+    preview.src = url;
+    preview.style.display = 'block';
+  } else {
+    preview.style.display = 'none';
+  }
+});
+
+form.addEventListener('submit', async function (e) {
+  e.preventDefault();
+
+  const supplier = supplierSelect.value;
+  const bannerUrl = bannerUrlInput.value.trim();
+
+  if (!supplier || !bannerUrl) {
+    alert('⚠️ Please select a supplier and paste a valid GitHub banner URL.');
+    return;
+  }
+
+  const fileName = bannerUrl.split('/').pop();
+
+  try {
+    // Step 1: Fetch existing banners.json from /data/
+    const response = await fetch('../../data/banners.json');
+    let jsonData = response.ok ? await response.json() : { suppliers: [] };
+
+    // Step 2: Check if supplier already exists
+    const existing = jsonData.suppliers?.find(s => s.name === supplier);
+
+    if (existing) {
+      existing.banner = { fileName, url: bannerUrl };
+    } else {
+      if (!jsonData.suppliers) jsonData.suppliers = [];
+      jsonData.suppliers.push({
+        name: supplier,
+        banner: { fileName, url: bannerUrl }
+      });
+    }
+
+    // Step 3: Create a downloadable / copyable updated JSON
+    const updatedJson = JSON.stringify(jsonData, null, 2);
+    const blob = new Blob([updatedJson], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'banners.json';
+    a.click();
+    URL.revokeObjectURL(url);
+
+    alert('✅ JSON updated! Downloaded latest version — replace the one in /data/ on GitHub.');
+
+    // Optional: show in console for review
+    console.log('Updated JSON:', jsonData);
+
+  } catch (error) {
+    console.error('Error updating banners.json:', error);
+    alert('❌ Failed to update JSON. Check console for details.');
+  }
+});
+  </script>
+</body>
+</html>
