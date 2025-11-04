@@ -153,18 +153,19 @@
     </nav>
   </header>
 
-  <section class="banner">
-    <p>Banner Managed by Super Admin</p>
-  </section>
+  <section class="banner" id="bannerSection">
+  <p>Loading Banner...</p>
+</section>
+
 
   <section class="boxes">
     <div class="box">
-      <img src="../../../images/box1-placeholder.jpg" alt="Box 1">
-      <p>Box 1 - Managed by Super Admin</p>
+      <img src="../../../images/canes/12 ltr.jpg" alt="Box 1">
+      <p>Price. 20/-, Free Home Delivery</p>
     </div>
     <div class="box">
-      <img src="../../../images/box2-placeholder.jpg" alt="Box 2">
-      <p>Box 2 - Managed by Super Admin</p>
+      <img src="../../../images/canes/19 ltr.jpg" alt="Box 2">
+      <p>Price. 80/-, Free Home Delivery</p>
     </div>
     <div class="box">
       <img src="../../../images/box3-placeholder.jpg" alt="Box 3">
@@ -183,3 +184,23 @@
   </footer>
 </body>
 </html>
+
+<script>
+fetch('https://orionfxservis.github.io/arcticmineralwaterco/data/banners.json')
+  .then(response => response.json())
+  .then(data => {
+    // Find Kamran's banner
+    const supplierBanner = data.suppliers.find(s => s.name.toLowerCase() === 'kamran');
+    
+    if (supplierBanner && supplierBanner.banner && supplierBanner.banner.url) {
+      const bannerSection = document.getElementById('bannerSection');
+      bannerSection.style.background = `url('${supplierBanner.banner.url}') center/cover no-repeat`;
+      bannerSection.innerHTML = ''; // Remove loading text
+    } else {
+      console.warn('⚠️ No banner found for Kamran in JSON file.');
+    }
+  })
+  .catch(err => {
+    console.error('❌ Error loading banner:', err);
+  });
+</script>
